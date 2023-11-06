@@ -1,0 +1,74 @@
+\documentclass{beamer}
+\usetheme{Copenhagen}
+
+% Basic packages
+\usepackage{subfiles}
+\usepackage[quiet]{fontspec}
+\usepackage{geometry}
+\usepackage{hyperref}
+\usepackage{fancyhdr, lastpage}
+\usepackage{multirow, multicol}
+\usepackage{longtable}
+\usepackage{siunitx}
+\usepackage{float}
+\usepackage{graphicx}
+\usepackage{subcaption}
+
+% Hyperref config
+\hypersetup{colorlinks=true, urlcolor=blue, linkcolor=white}
+\urlstyle{same}
+
+\title{DietDupe}
+\subtitle{The flavourful Feat of Finding Fantastic Food Facsimiles}
+\author{Piotr Kaszubski \and Antoni Solarski \and Nina Żukowska}
+\institute{Poznań University of Technology}
+\date{Monday, November  6, 2023}
+
+\begin{document}
+\maketitle
+\begin{frame}
+	\frametitle{Hypothesis}
+	By leveraging FlavorGraph, we can identify suitable
+	substitutes for various dietary preferences, such as vegan,
+	keto, and low-carb, while maintaining sensory satisfaction,
+	ultimately enhancing the adherence and satisfaction of
+	individuals following these diets.
+
+	\vspace{1cm}
+	\noindent
+	By using the output of our DietDupe module we could inject it
+	into the reverse-cooking pipeline and make it produce
+	sensible recipes.
+\end{frame}
+
+\begin{frame}
+	\frametitle{Steps}
+	\begin{enumerate}
+		\item Research
+		\item Finding a database of food categories(example: vegan, paleo, keto, low carb etc) 
+		\item Provide a Mapping to flavourgraph 
+		\item EXPERIMENT with approaches 
+		\item Pick best approach
+	\end{enumerate}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Literature}
+	\begin{itemize}
+		\item 
+			FlavourGraph \url{https://github.com/lamypark/FlavorGraph}
+		\item 
+			Inverse Cooking \url{https://github.com/facebookresearch/inversecooking}
+	\end{itemize}
+
+\end{frame}
+\begin{frame}
+	\frametitle{Datasets}
+	\begin{itemize}
+		\item Recipe 1M, 
+		\item flavourgraph, 
+		\item dataset of food classification by food category (or nutriscore)
+	\end{itemize}
+\end{frame}
+\end{document}
+

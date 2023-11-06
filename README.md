@@ -3,27 +3,32 @@ DietDupe: The flavourful Feat of Finding Fantastic Food Facsimiles
 
 ## Initial Plan
 
-*Overall*
+### Overall
 
-By leveraging FlavorGraph, we can identify suitable substitutes for various dietary preferences, such as vegan, keto, and low-carb, while maintaining sensory satisfaction, ultimately enhancing the adherence and satisfaction of individuals following these diets. By using the output of our DD module we could inject it into the reverse-cooking pipeline and make it produce sensible recipes.
+By leveraging FlavorGraph, we can identify suitable substitutes for various
+dietary preferences, such as vegan, keto, and low-carb, while maintaining
+sensory satisfaction, ultimately enhancing the adherence and satisfaction of
+individuals following these diets.
 
-*Steps*
+By using the output of our DD module we could inject it into the reverse-cooking
+pipeline and make it produce sensible recipes.
+
+### Steps
 
 1. Research
-2. Finding a database of food categories(example: vegan, paleo, keto, low carb etc) 
-3. Provide a Mapping to flavourgraph 
-4. EXPERIMENT with approaches 
+2. Finding a database of food categories(example: vegan, paleo, keto, low carb,
+   etc.)
+3. Provide a mapping to FlavourGraph
+4. EXPERIMENT with approaches
 5. Pick best approach
 
-*Literature*
+### Literature
 
-flavourgraph[https://github.com/lamypark/FlavorGraph]
-inverse cooking[https://github.com/facebookresearch/inversecooking]
+- FlavourGraph <https://github.com/lamypark/FlavorGraph>
+- inverse cooking <https://github.com/facebookresearch/inversecooking>
 
-*Datasets*
+### Datasets
 
-Recipe 1M, 
-flavourgraph, 
-dataset of food classification by food category(or nutriscore)
-
-
+- Recipe 1M,
+- FlavourGraph,
+- dataset of food classification by food category (or nutriscore)

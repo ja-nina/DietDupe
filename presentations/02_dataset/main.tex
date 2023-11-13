@@ -83,7 +83,83 @@
 	\end{figure}
 \end{frame}
 
-% TODO: matching, plots, conclusions
+\begin{frame}
+	\frametitle{Matching the two datasets}
+	\framesubtitle{Method 1: \texttt{BERT}}
+	\begin{enumerate}
+		\item Use \texttt{BertTokenizer} to transform both datasets into
+			same-space embeddings.
+		\item Match terms based on cosine similarity.
+	\end{enumerate}
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=\linewidth]{img/match_bert_head.png}
+	\end{figure}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Matching the two datasets}
+	\framesubtitle{Method 2: \texttt{food2vec}}
+	\begin{enumerate}
+		\item Use \texttt{food2vec.semantic\_nutrition.Estimator} to transform
+			both datasets into same-space embeddings.
+		\item Match terms based on cosine similarity.
+	\end{enumerate}
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=\linewidth]{img/match_f2v_head.png}
+	\end{figure}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Matching the two datasets}
+	\framesubtitle{Combining both methods}
+	\begin{enumerate}
+		\item Fill nodes from \texttt{food2vec} with nodes from \texttt{BERT}.
+	\end{enumerate}
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=\linewidth]{img/match_combo.png}
+	\end{figure}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Data exploration}
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.9\linewidth]{img/plot_sim_bert.png}
+	\end{figure}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Data exploration}
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.9\linewidth]{img/plot_sim_f2v.png}
+	\end{figure}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Data exploration}
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.9\linewidth]{img/plot_sim_f2v_bert.png}
+	\end{figure}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Data exploration}
+	\begin{figure}[H]
+		\centering
+		\begin{subfigure}[b]{0.45\linewidth}
+			\includegraphics[width=\linewidth]{img/eda_std1.png}
+		\end{subfigure}
+		\begin{subfigure}[b]{0.45\linewidth}
+			\includegraphics[width=\linewidth]{img/eda_std2.png}
+		\end{subfigure}
+		\caption{Summary of micronutrient columns}
+	\end{figure}
+\end{frame}
 
 \end{document}
 

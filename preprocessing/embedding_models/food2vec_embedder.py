@@ -8,8 +8,9 @@ class Food2VecEmbedder(BaseEmbedder):
     Not optimal since not every ingredient is embedded, but it's the best we have.
     """
     def __init__(self, embeddings_dict: dict[str, list[float]]):
+        super().__init__()
         self.estimator = Estimator() 
         self.embeddings_dict = embeddings_dict
         
-    def embed(self, text: str) -> np.ndarray:
+    def _embed(self, text: str) -> np.ndarray:
         return self.estimator.embed(text)

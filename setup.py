@@ -11,7 +11,9 @@ setup(
     install_requires=[
         'numpy==1.25.2',
         'pandas==1.5.2',
-        'transformers==4.20.1',
-        'torch==2.0.0'
+        'transformers==4.25.1',
+        'torch==2.1.0',
+        'datasets==2.15.0',
+        'safetensors==0.4.0'
     ],
 )

@@ -1,6 +1,7 @@
 from preprocessing.embedding_models.base_embedder import BaseEmbedder
 from preprocessing.embedding_models.bert_embedder import BertEmbedder
 from sklearn.metrics.pairwise import cosine_similarity
+from tqdm import tqdm
 
 import numpy as np
 import pandas as pd
@@ -15,6 +16,7 @@ class Matcher:
         self.embedded_hierarchical_dict = {}
         self.similarity_matrix = None
         self.df_results = None
+        self.most_similar = None
         
         self._create_emmpty_df()
     
@@ -31,16 +33,12 @@ class Matcher:
         self.hierarchical_dict = dict([(" ".join(name), list(self.hierarchy_stripper(name))) for name in external_list_splitted])
         return self.hierarchical_dict
     
-    def _embed_hierarchical_dict(self):
-        self.embedded_hierarchical_dict = dict([(name, list(self.model_for_embedding.embed(name))) for name in self.hierarchical_dict])
-        return self.embedded_hierarchical_dict
     
     def _prepare_extrenal_data_hierarchical(self):
         self._create_hierarchical_list()
         keywords = [key for key, words in self.hierarchical_dict.items() for _ in words]
         hierarchy_words = [word for _, words in self.hierarchical_dict.items() for word in words]
-        embeddings = np.array([self.model_for_embedding.embed(word) for word in hierarchy_words])
-        print(keywords, hierarchy_words)
+        embeddings = np.array([self.model_for_embedding.embed(word) for word in tqdm(hierarchy_words, desc = "Embedding external, hierarchical data")])
         return keywords, hierarchy_words, embeddings
     
     def _match_data(self, embeddings_internal, embeddings_external, keywords_external, hierarchial_words_external):
@@ -49,13 +47,14 @@ class Matcher:
         most_similar_indices = np.argmax(similarity_matrix, axis=1)
         most_similar_values = np.max(similarity_matrix, axis=1)
 
-        most_similar = list(zip(range(len(self.data_internal)), most_similar_indices, most_similar_values))
+        self.most_similar = list(zip(range(len(self.data_internal)), most_similar_indices, most_similar_values))
         
         self.df_results['best_match'] = None
-        self.df_results['similarity_of_best_match'] = None
+        self.df_results['index_of_bast_match'] = None
 
-        for i, j, sim in most_similar:
+        for i, j, sim in self.most_similar:
             self.df_results.loc[i, 'exact_best_match'] = hierarchial_words_external[j]
+            self.df_results.loc[i, 'index_of_bast_match'] = j
             self.df_results.loc[i, 'best_match'] = keywords_external[j]
             self.df_results.loc[i, 'similarity'] = sim
             
@@ -63,7 +62,7 @@ class Matcher:
 
         
     def run(self):
-        embeddings_internal = np.array([self.model_for_embedding.embed(word) for word in self.data_internal])
+        embeddings_internal = np.array([self.model_for_embedding.embed(word) for word in tqdm(self.data_internal, desc="Embedding internal data")])
         keywords, hierarchy_words, embeddings_external = self._prepare_extrenal_data_hierarchical()
         
         return self._match_data(embeddings_internal, embeddings_external, keywords, hierarchy_words)

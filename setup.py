@@ -6,7 +6,7 @@ setup(
     packages=find_packages(),
     description='Supsitution recommender for dietary restrictions',
     author='PAN',
-    author_email='ninazukowska1@gmail.com',
+    author_email='ninazukowska1@gmail.com, piotr.kaszubski@student.put.poznan.pl',
     url='https://github.com/ja-nina/DietDupe',
     install_requires=[
         'numpy==1.25.2',

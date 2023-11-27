@@ -29,6 +29,9 @@ pipeline and make it produce sensible recipes.
 
 ### Datasets
 
-- Recipe 1M,
+- FoodDB (see in data folder - used description for possibble finetuning),
 - FlavourGraph,
 - dataset of food classification by food category (or nutriscore)
+
+### 
+TODO: ADD INSTRUCTIONS ABOUT KAGGLE NB AND INFO ABOUT HUGGINGFACE AND WB API KEYS

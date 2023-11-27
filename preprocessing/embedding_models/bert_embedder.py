@@ -27,7 +27,7 @@ class BertEmbedderAvg(BertEmbedder):
     
 if __name__=="__main__":
     bert_embedder = BertEmbedder()
-    embed1 = bert_embedder.embed("BUTTERMILK PANCAKES")
+    embed1 = bert_embedder.embed("BUTTERMILK PANCAKES BANANA FLAVOUR")
     embed2 = bert_embedder.embed("BUTTER WHOLE FAT")
     embed3 = bert_embedder.embed("BUTTERMILK")
     embed4 = bert_embedder.embed("PANCAKES MADE FROM BUTTERMILK")
@@ -35,7 +35,7 @@ if __name__=="__main__":
     print(similarity_matrix)
     
     bert_embedder = BertEmbedderAvg()
-    embed1 = bert_embedder.embed("BUTTERMILK PANCAKES")
+    embed1 = bert_embedder.embed("BUTTERMILK PANCAKES BANANA FLAVOUR")
     embed2 = bert_embedder.embed("BUTTER WHOLE FAT")
     embed3 = bert_embedder.embed("BUTTERMILK")
     embed4 = bert_embedder.embed("PANCAKES MADE FROM BUTTERMILK")

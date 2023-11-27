@@ -1,13 +1,13 @@
 from preprocessing.embedding_models.base_embedder import BaseEmbedder
-from preprocessing.embedding_models.bert_domain_addapt_embedder import BertDomainAddaptEmbedder
+from preprocessing.embedding_models.bert_domain_addapt_embedder import BertAvgDomainAddaptEmbedder
 from preprocessing.embedding_models.food2vec_embedder import Food2VecEmbedder
 from sklearn.metrics.pairwise import cosine_similarity
 
 import numpy as np
 
 
-class EnsebleEmbedder(BaseEmbedder):
-    def __init__(self, embedders=[BertDomainAddaptEmbedder(), Food2VecEmbedder()]):
+class EnsembleEmbedder(BaseEmbedder):
+    def __init__(self, embedders=[BertAvgDomainAddaptEmbedder(), Food2VecEmbedder()]):
         super().__init__()
         self.embedders = embedders
     
@@ -16,7 +16,7 @@ class EnsebleEmbedder(BaseEmbedder):
         return concatenated_embedding
 
 if __name__=="__main__":
-    ensemble_embedder = EnsebleEmbedder()
+    ensemble_embedder = EnsembleEmbedder()
     embed1 = ensemble_embedder.embed("BUTTERMILK PANCAKES BANANA FLAVOUR")
     embed2 = ensemble_embedder.embed("BUTTER WHOLE FAT")
     embed3 = ensemble_embedder.embed("BUTTERMILK")

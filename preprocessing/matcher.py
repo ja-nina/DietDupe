@@ -49,13 +49,11 @@ class Matcher:
 
         self.most_similar = list(zip(range(len(self.data_internal)), most_similar_indices, most_similar_values))
         
-        self.df_results['best_match'] = None
-        self.df_results['index_of_bast_match'] = None
-
         for i, j, sim in self.most_similar:
             self.df_results.loc[i, 'exact_best_match'] = hierarchial_words_external[j]
-            self.df_results.loc[i, 'index_of_bast_match'] = j
-            self.df_results.loc[i, 'best_match'] = keywords_external[j]
+            self.df_results.loc[i, 'index_external'] = j
+            self.df_results.loc[i, 'index_internal'] = i
+            self.df_results.loc[i, 'external'] = keywords_external[j]
             self.df_results.loc[i, 'similarity'] = sim
             
         return self.df_results

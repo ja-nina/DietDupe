@@ -9,10 +9,10 @@ class Food2VecEmbedder(BaseEmbedder):
     """
     def __init__(self,):
         super().__init__()
-        self.estimator = Estimator()
+        self.model = Estimator()
         
     def _embed(self, text: str) -> np.ndarray:
         try:
-            return self.estimator.embed(text)
+            return self.model.embed(text)
         except ValueError:
             return np.zeros(300)

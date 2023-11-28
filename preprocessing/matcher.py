@@ -1,5 +1,7 @@
 from preprocessing.embedding_models.base_embedder import BaseEmbedder
-from preprocessing.embedding_models.bert_embedder import BertEmbedder
+from preprocessing.embedding_models.ensemble_embedder import EnsembleEmbedder
+from utils import masked_cosine_similarity
+
 from sklearn.metrics.pairwise import cosine_similarity
 from tqdm import tqdm
 
@@ -7,10 +9,14 @@ import numpy as np
 import pandas as pd
 
 class Matcher:
-    def __init__(self, model_for_embedding, data_internal, data_external):
+    def __init__(self, model_for_embedding: BaseEmbedder, 
+                 data_internal: list[str], 
+                 data_external: list[str], 
+                 similarity_function: callable = cosine_similarity):
         self.data_internal = data_internal
         self.data_external = data_external
         self.model_for_embedding = model_for_embedding
+        self.similarity_function = similarity_function
         
         self.hierarchical_dict = {}
         self.embedded_hierarchical_dict = {}
@@ -42,7 +48,7 @@ class Matcher:
         return keywords, hierarchy_words, embeddings
     
     def _match_data(self, embeddings_internal, embeddings_external, keywords_external, hierarchial_words_external):
-        similarity_matrix = cosine_similarity(embeddings_internal, embeddings_external)
+        similarity_matrix = self.similarity_function(embeddings_internal, embeddings_external)
         
         most_similar_indices = np.argmax(similarity_matrix, axis=1)
         most_similar_values = np.max(similarity_matrix, axis=1)
@@ -67,10 +73,10 @@ class Matcher:
     
 if __name__=="__main__":
     # Test
-    model = BertEmbedder()
+    model = EnsembleEmbedder()
     internal_data = ["lowfat milk", "juice orange", "bananas"]
-    external_data = ["MILK, LOWFAT, 2%", "MILK, BANANA FLAVOUR, FULL FAT", "JUICE, ORANGE, CHILLED, INCLUDES FROM CONCENTRATE, WITH ADDED CALCIUM AND VITAMIN D"]
-    matcher = Matcher(model, internal_data, external_data)
+    external_data = ["MILK, LOWFAT, 2%", "MILK, BANANAS FLAVOUR, FULL FAT", "JUICE, ORANGE, CHILLED, INCLUDES FROM CONCENTRATE, WITH ADDED CALCIUM AND VITAMIN D"]
+    matcher = Matcher(model, internal_data, external_data, similarity_function=masked_cosine_similarity)
     res = matcher.run()
     print(res)
     

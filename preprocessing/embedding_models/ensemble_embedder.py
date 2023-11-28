@@ -7,7 +7,7 @@ import numpy as np
 
 
 class EnsembleEmbedder(BaseEmbedder):
-    def __init__(self, embedders=[BertAvgDomainAddaptEmbedder(), Food2VecEmbedder()]):
+    def __init__(self, embedders=[BertAvgDomainAddaptEmbedder(), Food2VecEmbedder(), Food2VecEmbedder()]):
         super().__init__()
         self.embedders = embedders
     

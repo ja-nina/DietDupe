@@ -7,7 +7,7 @@ import numpy as np
 
 
 class EnsembleEmbedder(BaseEmbedder):
-    def __init__(self, embedders=[BertAvgDomainAddaptEmbedder(), Food2VecEmbedder()]):
+    def __init__(self, embedders=[BertAvgDomainAddaptEmbedder(), Food2VecEmbedder(), Food2VecEmbedder()]):
         super().__init__()
         self.embedders = embedders
     
@@ -17,8 +17,8 @@ class EnsembleEmbedder(BaseEmbedder):
 
 if __name__=="__main__":
     ensemble_embedder = EnsembleEmbedder()
-    embed1 = ensemble_embedder.embed("7 up")
-    embed2 = ensemble_embedder.embed("tea")
-    embed3 = ensemble_embedder.embed("willow")
+    embed1 = ensemble_embedder.embed("100%% bran")
+    embed2 = ensemble_embedder.embed("oat bran")
+    embed3 = ensemble_embedder.embed("mixed nuts")
     similarity_matrix = masked_cosine_similarity([embed1, embed2, embed3], [embed1, embed2, embed3])
     print(similarity_matrix)

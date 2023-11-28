@@ -42,7 +42,7 @@ def match_flavougraph_nodes_to_nutridata(internal_data_path: Path, external_data
     save_output(results, output_directory)
     
 if __name__=='__main__':
-    match_flavougraph_nodes_to_nutridata(internal_data_path='data/nodes_191120.csv', 
-                                         external_data_path='data/ABBREV.csv',
-                                         output_directory='data/matches/')
+    match_flavougraph_nodes_to_nutridata(internal_data_path=Path('data/nodes_191120.csv'), 
+                                         external_data_path=Path('data/ABBREV.csv'),
+                                         output_directory=Path('data/matches/'))
     

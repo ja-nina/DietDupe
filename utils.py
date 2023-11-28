@@ -17,8 +17,8 @@ def masked_cosine_similarity(embedding1, embedding2):
     therefore we need to mask them out before calculating cosine similarity on the concatenated 
     embedding
     """
-    embedding1 = np.array(embedding1)
-    embedding2 = np.array(embedding2)
+    embedding1 = np.array(embedding1).astype(np.float32)
+    embedding2 = np.array(embedding2).astype(np.float32)
     
     mask1 = embedding1 == 0.0
     mask2 = embedding2 == 0.0

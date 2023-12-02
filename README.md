@@ -33,6 +33,7 @@ pipeline and make it produce sensible recipes.
 - FlavourGraph,
 - dataset of food classification by food category (or nutriscore)
 - [USDA National Nutrient Database for Standard Reference, Release 27](http://www.ars.usda.gov/ba/bhnrc/ndl), abbreviations will be used from [abbreviations APPENDIX A](https://data.nal.usda.gov/dataset/composition-foods-raw-processed-prepared-usda-national-nutrient-database-standard-referen-14)
+- things 2 try: https://github.com/chambliss/foodbert
 
 ### 
 TODO: ADD INSTRUCTIONS ABOUT KAGGLE NB AND INFO ABOUT HUGGINGFACE AND WB API KEYS

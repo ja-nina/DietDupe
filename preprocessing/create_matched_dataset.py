@@ -11,8 +11,9 @@ def load_internal_data(path: Path):
     internal_data= pd.read_csv(path)
     internal_data = internal_data.dropna(subset=['name'])
     internal_data['name'] =internal_data['name'].astype(str)
-    internal_data_names = internal_data['name'].tolist()
-    return internal_data_names
+    internal_data_names = internal_data['name'].tolist()  
+    indices_internal = internal_data['node_id'].tolist()
+    return internal_data_names, indices_internal
 
 def load_external_data(path: Path):
     external_data= pd.read_csv(path)
@@ -30,13 +31,13 @@ def save_output(output, output_directory: Path):
         
     
 def match_flavougraph_nodes_to_nutridata(internal_data_path: Path, external_data_path: Path, output_directory: Path):
-    names_internal = load_internal_data(internal_data_path)
+    names_internal, indices_internal = load_internal_data(internal_data_path)
     names_external = load_external_data(external_data_path)
     
     cleaned_internal_names = [clean_text(name) for name in names_internal]
     cleaned_external_names = [clean_text(name) for name in names_external]
     
-    matcher_ensemble = Matcher(EnsembleEmbedder(), cleaned_internal_names, cleaned_external_names, similarity_function=masked_cosine_similarity)
+    matcher_ensemble = Matcher(EnsembleEmbedder(), cleaned_internal_names, cleaned_external_names, similarity_function=masked_cosine_similarity, index_internal=indices_internal)
     results = matcher_ensemble.run()
     
     save_output(results, output_directory)

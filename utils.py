@@ -1,7 +1,8 @@
 import matplotlib.pyplot as plt
 import numpy as np
+import pandas as pd
 
-from sklearn.metrics.pairwise import cosine_similarity, check_pairwise_arrays
+from sklearn.metrics.pairwise import cosine_similarity
 
 def plot_histogram(df, column, name_of_embedder):
     plt.hist(df[column].fillna(0), bins=10, edgecolor='black')
@@ -36,23 +37,17 @@ def masked_cosine_similarity(embedding1, embedding2):
     dot_product = np.dot(embedding1, embedding2.T)
     return dot_product / masked_outer
     
+def map_indices_to_name(indices: list[int], food: pd.DataFrame, name_colname: str = 'internal'):
+    return [food.loc[i, name_colname] for i in indices]
 
-if __name__=="__main__":
+if __name__ == "__main__":
+    # read pickle and to txt
+    import pickle
+    import json
+    with open('data/FlavorGraph_node_embedding.pickle', 'rb') as f:
+        data = pickle.load(f)
+        data_serializable = {k: v.tolist() for k, v in data.items() if isinstance(v, np.ndarray)}
+    with open('test.json', 'w') as f:
+        json.dump(data_serializable, f)
     
-    embeddings1 = np.array([
-        np.array([1.0, 2.0, 3.0, 4.0, 5.0]),
-        np.array([0.0, 0.0, 5.0, 1.0, 1.0]),
-    ])
-
-    embeddings2 = np.array([
-        np.array([1.0, 2.0, 3.0, 4.0, 5.0]),
-        np.array([0.0, 0.0, 3.0, 4.0, 5.0]),
-        np.array([0.0, 0.0, 5.0, 1.0, 1.0]),
-        np.array([3.0, 9.0, 5.0, 1.0, 1.0])
-    ])
-
-    cos_sim_masked = masked_cosine_similarity(embeddings1, embeddings2)
-    print("Cosine Similarities Masked:\n", cos_sim_masked)
     
-    regular_cosine_sim = cosine_similarity(embeddings1, embeddings2)
-    print("Regular Cosine Similarities:\n", regular_cosine_sim )

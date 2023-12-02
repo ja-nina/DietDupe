@@ -12,7 +12,8 @@ class Matcher:
     def __init__(self, model_for_embedding: BaseEmbedder, 
                  data_internal: list[str], 
                  data_external: list[str], 
-                 similarity_function: callable = cosine_similarity):
+                 similarity_function: callable = cosine_similarity,
+                 index_internal = None):
         self.data_internal = data_internal
         self.data_external = data_external
         self.model_for_embedding = model_for_embedding
@@ -23,12 +24,15 @@ class Matcher:
         self.similarity_matrix = None
         self.df_results = None
         self.most_similar = None
+        self.name_index_dict = None
+        self.index_internal = index_internal
         
         self._create_emmpty_df()
     
     def _create_emmpty_df(self):
         self.df_results = pd.DataFrame()
         self.df_results['internal'] = self.data_internal
+        self.df_results['index_internal'] = [i for i, _ in enumerate(self.data_internal)]
         
     def hierarchy_stripper(self, hierarchical_text: list[str]):
         for i in range(1, len(hierarchical_text)+1):
@@ -37,6 +41,7 @@ class Matcher:
     def _create_hierarchical_list(self):
         external_list_splitted = [[x.strip() for x in name.split(",")] for name in self.data_external]
         self.hierarchical_dict = dict([(" ".join(name), list(self.hierarchy_stripper(name))) for name in external_list_splitted])
+        self.name_index_dict = dict([(" ".join(name), index) for index, name in enumerate(external_list_splitted)])
         return self.hierarchical_dict
     
     
@@ -57,8 +62,8 @@ class Matcher:
         
         for i, j, sim in self.most_similar:
             self.df_results.loc[i, 'exact_best_match'] = hierarchial_words_external[j]
-            self.df_results.loc[i, 'index_external'] = j
-            self.df_results.loc[i, 'index_internal'] = i
+            self.df_results.loc[i, 'index_external'] = int(self.name_index_dict[keywords_external[j]])
+            self.df_results.loc[i, 'index_internal'] = i if self.index_internal is None else self.index_internal[i]
             self.df_results.loc[i, 'external'] = keywords_external[j]
             self.df_results.loc[i, 'similarity'] = sim
             
@@ -75,8 +80,9 @@ if __name__=="__main__":
     # Test
     model = EnsembleEmbedder()
     internal_data = ["lowfat milk", "juice orange", "bananas"]
+    index_internal = [1,3,5]
     external_data = ["MILK, LOWFAT, 2%", "MILK, BANANAS FLAVOUR, FULL FAT", "JUICE, ORANGE, CHILLED, INCLUDES FROM CONCENTRATE, WITH ADDED CALCIUM AND VITAMIN D"]
-    matcher = Matcher(model, internal_data, external_data, similarity_function=masked_cosine_similarity)
+    matcher = Matcher(model, internal_data, external_data, similarity_function=masked_cosine_similarity, index_internal=index_internal)
     res = matcher.run()
     print(res)
     

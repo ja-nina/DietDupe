@@ -42,12 +42,10 @@ def map_indices_to_colname(indices: list[int], food: pd.DataFrame, name_colname:
 
 def map_indices_and_filter_by_colname(base_index: str, indices: list[int], food: pd.DataFrame, higher: list[str], lower: list[str]):
     valid_indices = indices
-    print("valid indices", indices)
     for column in higher:
         valid_indices = [i for i in valid_indices if food.loc[i, column] >= food.loc[base_index, column]]
     for column in lower:
         valid_indices = [i for i in valid_indices if food.loc[i, column] <= food.loc[base_index, column]]
-
     return valid_indices
 
 def input_ingredients():

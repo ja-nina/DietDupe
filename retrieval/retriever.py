@@ -13,6 +13,7 @@ class DietDupe:
         self.nutritional_data = "data/ABBREV.csv"
         self.full_matching = "data/matches/matching_full.csv"
         self.flavour_graph_embeddings = "data/FlavorGraph_node_embedding.pickle"
+        self.flavour_graph_node_info = "data/nodes_191120.csv"
         
     def load_foods(self):
         if not os.path.exists(self.matched_foods_cvs):
@@ -26,12 +27,19 @@ class DietDupe:
             return food_filtered
         else:
             return pd.read_csv(self.matched_foods_cvs).set_index("index_internal")
+   
+    def filter_by_nodes(self, food_embeddings):
+        node_info = pd.read_csv(self.flavour_graph_node_info)
+        node_info = node_info[(node_info['is_hub'] == 'hub') & (node_info['node_type'] == 'ingredient')]
+        hub_ingredients = set(node_info['node_id'])
+        food_embeddings_filtered = {key: value for key, value in food_embeddings.items() if key in hub_ingredients}
+        return food_embeddings_filtered
         
     def get_embeddings(self):
         with open(self.flavour_graph_embeddings, "rb") as f:
             food_embeddings = pickle.load(f)
             food_embeddings = {int(key): value for key, value in food_embeddings.items()}
-            food_embeddings = {key: value for key, value in food_embeddings.items() if key < 7102} # FIXME: hard-coded non-compounds
+            food_embeddings = self.filter_by_nodes(food_embeddings)
             food_embeddings = dict(sorted(food_embeddings.items()))
         return food_embeddings
     
@@ -43,5 +51,7 @@ class DietDupe:
     
 if __name__ == '__main__':
     ingredients = input_ingredients() 
-    res = DietDupe().run(recipe_ingredients = ingredients, restrictions = [("Protein_(g)", "higher")])
+    res = DietDupe().run(recipe_ingredients = ingredients, restrictions = [])
+    
+    
     print(res)

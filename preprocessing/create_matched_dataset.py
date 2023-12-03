@@ -9,7 +9,6 @@ import json
     
 def load_internal_data(path: Path):
     internal_data= pd.read_csv(path)
-    internal_data = internal_data.dropna(subset=['name'])
     internal_data['name'] =internal_data['name'].astype(str)
     internal_data_names = internal_data['name'].tolist()  
     indices_internal = internal_data['node_id'].tolist()

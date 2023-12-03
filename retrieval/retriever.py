@@ -51,7 +51,7 @@ class DietDupe:
     
 if __name__ == '__main__':
     ingredients = input_ingredients() 
-    res = DietDupe().run(recipe_ingredients = ingredients, restrictions = [])
+    res = DietDupe().run(recipe_ingredients = ingredients, restrictions = [("Protein_(g)", "higher")])
     
     
     print(res)

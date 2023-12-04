@@ -6,8 +6,8 @@ import numpy as np
 class BertEmbedder(BaseEmbedder):
     def __init__(self):
         super().__init__()
-        self.model = BertModel.from_pretrained('bert-base-uncased')
-        self.tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
+        self.model = BertModel.from_pretrained('chambliss/distilbert-for-food-extraction')
+        self.tokenizer = BertTokenizer.from_pretrained('distilbert')
         self.post_init()
         print("SELF DEVICE", self.device)
 

@@ -1,4 +1,4 @@
-from transformers import AutoModelForMaskedLM, AutoModel
+from transformers import AutoModel
 from transformers import AutoTokenizer
 from preprocessing.embedding_models.base_embedder import BaseEmbedder
 from sklearn.metrics.pairwise import cosine_similarity

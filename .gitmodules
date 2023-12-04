@@ -1,0 +1,3 @@
+[submodule "notebooks/foodbert"]
+	path = preprocessing/embedding_models/foodbert
+	url = https://github.com/chambliss/foodbert

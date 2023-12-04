@@ -14,7 +14,7 @@ class BertEmbedder(BaseEmbedder):
     def _embed(self, text: str) -> np.ndarray:
         inputs = self.tokenizer(text, return_tensors='pt').to(self.device)
         outputs = self.model(**inputs, output_hidden_states=True)
-        return outputs.hidden_states[-1].detach().numpy()[0, 0, :].flatten()
+        return outputs.hidden_states[-1].detach().cpu().numpy()[0, 0, :].flatten()
     
     
 class BertEmbedderAvg(BertEmbedder):
@@ -24,7 +24,7 @@ class BertEmbedderAvg(BertEmbedder):
     def _embed(self, text: str) -> np.ndarray:
         inputs = self.tokenizer(text, return_tensors='pt').to(self.device)
         outputs = self.model(**inputs)
-        return outputs[0].detach().numpy().squeeze().mean(axis=0)
+        return outputs[0].detach().cpu().numpy().squeeze().mean(axis=0)
     
 if __name__=="__main__":
     bert_embedder = BertEmbedder()

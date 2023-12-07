@@ -60,14 +60,3 @@ def input_ingredients():
             ingredients.append(int(ingredient))
     return ingredients
     
-if __name__ == "__main__":
-    # read pickle and to txt
-    import pickle
-    import json
-    with open('data/FlavorGraph_node_embedding.pickle', 'rb') as f:
-        data = pickle.load(f)
-        data_serializable = {k: v.tolist() for k, v in data.items() if isinstance(v, np.ndarray)}
-    with open('test.json', 'w') as f:
-        json.dump(data_serializable, f)
-    
-    

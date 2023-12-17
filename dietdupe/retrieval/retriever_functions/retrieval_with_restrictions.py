@@ -1,10 +1,13 @@
 from sklearn.metrics.pairwise import euclidean_distances # euclidian distances because we work on tsne projections
 from dietdupe.utils import map_indices_to_colname, map_indices_and_filter_by_colname
-from dietdupe.retrieval.utils import parse_args
+from dietdupe.retrieval import parse_args
+
+from typing import Dict, Tuple
 import numpy as np
+import pandas as pd
 
 
-def retrieval_with_restrictions(foods, food_embeddings, recipe_indices,  top_k, restrictions = []):
+def retrieval_with_restrictions(foods: pd.DataFrame, food_embeddings: Dict[int, np.ndarray], recipe_indices: list[int],  top_k: int, restrictions: list[Tuple[str, str]] = [])-> list[list[str]]:
     lower, higher = parse_args(restrictions)
     
     food_embeddings_array = list(food_embeddings.values())

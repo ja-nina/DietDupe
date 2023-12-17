@@ -58,6 +58,16 @@ class Nutrient(Enum):
     GmWt_2 = "GmWt_2"
     GmWt_Desc2 = "GmWt_Desc2"
     
+def parse_args(restrictions):
+    lower = []
+    higher = []
+    for restriction in restrictions:
+        if restriction[1] == 'lower':
+            lower.append(restriction[0])
+        if restriction[1] == 'higher':
+            higher.append(restriction[0])
+    return lower, higher
+            
 
 @dataclass
 class RecipeRestriction:

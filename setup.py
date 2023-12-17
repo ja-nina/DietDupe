@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 setup(
-    name='Diet-Dupe',
+    name='dietdupe',
     version='0.1',
     packages=find_packages(),
     description='Supsitution recommender for dietary restrictions',

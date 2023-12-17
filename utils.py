@@ -42,7 +42,6 @@ def map_indices_to_colname(indices: list[int], food: pd.DataFrame, name_colname:
 
 def map_indices_and_filter_by_colname(base_index: str, indices: list[int], food: pd.DataFrame, higher: list[str], lower: list[str]):
     valid_indices = indices
-    print("valid indices", indices)
     for column in higher:
         valid_indices = [i for i in valid_indices if food.loc[i, column] >= food.loc[base_index, column]]
     for column in lower:
@@ -59,15 +58,4 @@ def input_ingredients():
         else:
             ingredients.append(int(ingredient))
     return ingredients
-    
-if __name__ == "__main__":
-    # read pickle and to txt
-    import pickle
-    import json
-    with open('data/FlavorGraph_node_embedding.pickle', 'rb') as f:
-        data = pickle.load(f)
-        data_serializable = {k: v.tolist() for k, v in data.items() if isinstance(v, np.ndarray)}
-    with open('test.json', 'w') as f:
-        json.dump(data_serializable, f)
-    
     

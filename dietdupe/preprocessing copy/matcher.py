@@ -1,4 +1,4 @@
-from dietdupe.preprocessing.embedding_models.base_embedder import BaseEmbedder
+from preprocessing.embedding_models.base_embedder import BaseEmbedder
 from preprocessing.embedding_models.ensemble_embedder import EnsembleEmbedder
 from utils import masked_cosine_similarity
 

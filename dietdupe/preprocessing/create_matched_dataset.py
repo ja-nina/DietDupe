@@ -1,7 +1,7 @@
-from dietdupe.preprocessing.embedding_models.ensemble_embedder import EnsembleEmbedder
-from dietdupe.preprocessing.clean_text import clean_text
-from dietdupe.preprocessing.matcher import Matcher
-from dietdupe.utils import masked_cosine_similarity
+from preprocessing.embedding_models.ensemble_embedder import EnsembleEmbedder
+from preprocessing.clean_text import clean_text
+from preprocessing.matcher import Matcher
+from utils import masked_cosine_similarity
 from pathlib import Path
 import pandas as pd
 import json

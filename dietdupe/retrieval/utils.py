@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 from enum import Enum
+from typing import List
 
 
 class CategoryOfRestriction(Enum):
@@ -57,20 +58,19 @@ class Nutrient(Enum):
     GmWt_Desc1 = "GmWt_Desc1"
     GmWt_2 = "GmWt_2"
     GmWt_Desc2 = "GmWt_Desc2"
-    
-def parse_args(restrictions):
-    lower = []
-    higher = []
-    for restriction in restrictions:
-        if restriction[1] == 'lower':
-            lower.append(restriction[0])
-        if restriction[1] == 'higher':
-            higher.append(restriction[0])
-    return lower, higher
-            
 
 @dataclass
 class RecipeRestriction:
     category: CategoryOfRestriction
     nutrient: Nutrient
         
+def parse_args(restrictions: List[RecipeRestriction]):
+    lower = []
+    higher = []
+    for restriction in restrictions:
+        if restriction.category == CategoryOfRestriction.LOWER.value:
+            lower.append(restriction.nutrient.value)
+        if restriction.category == CategoryOfRestriction.HIGHER.value:
+            higher.append(restriction.nutrient.value)
+    return lower, higher
+            

@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
 from typing import Dict, Tuple
-from dietdupe.retrieval.utils import parse_args
+from dietdupe.retrieval import parse_args
 from sklearn.metrics.pairwise import euclidean_distances
 from dietdupe.utils import map_indices_to_colname, map_indices_and_filter_by_colname # TODO: move to retriever utils
 

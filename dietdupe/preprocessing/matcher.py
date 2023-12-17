@@ -1,6 +1,6 @@
-from dietdupe.preprocessing.embedding_models.base_embedder import BaseEmbedder
+from preprocessing.embedding_models.base_embedder import BaseEmbedder
 from preprocessing.embedding_models.ensemble_embedder import EnsembleEmbedder
-from utils import masked_cosine_similarity
+from dietdupe.utils import masked_cosine_similarity
 
 from sklearn.metrics.pairwise import cosine_similarity
 from tqdm import tqdm

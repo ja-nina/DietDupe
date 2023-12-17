@@ -1,9 +1,9 @@
 import numpy as np
 import pandas as pd
 from typing import Dict, Tuple
-from retrieval.utils import parse_args
+from dietdupe.retrieval.utils import parse_args
 from sklearn.metrics.pairwise import euclidean_distances
-from utils import map_indices_to_colname, map_indices_and_filter_by_colname # TODO: move to retriever utils
+from dietdupe.utils import map_indices_to_colname, map_indices_and_filter_by_colname # TODO: move to retriever utils
 
 p = 0.1 # parameter - move to retriever class
 def retrieval_with_restrictions_simple_context(foods: pd.DataFrame, food_embeddings: Dict[int, np.ndarray], recipe_indices: list[int],  top_k: int, restrictions: list[Tuple[str, str]] = [])-> list[list[str]]:

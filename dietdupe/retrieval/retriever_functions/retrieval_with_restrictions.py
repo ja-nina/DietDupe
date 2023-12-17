@@ -1,21 +1,14 @@
+from sklearn.metrics.pairwise import euclidean_distances # euclidian distances because we work on tsne projections
+from dietdupe.utils import map_indices_to_colname, map_indices_and_filter_by_colname
 import numpy as np
-import pandas as pd
-from typing import Dict, Tuple
-from retrieval.utils import parse_args
-from sklearn.metrics.pairwise import euclidean_distances
-from utils import map_indices_to_colname, map_indices_and_filter_by_colname # TODO: move to retriever utils
 
-p = 0.1 # parameter - move to retriever class
-def retrieval_with_restrictions_simple_context(foods: pd.DataFrame, food_embeddings: Dict[int, np.ndarray], recipe_indices: list[int],  top_k: int, restrictions: list[Tuple[str, str]] = [])-> list[list[str]]:
+
+def retrieval_with_restrictions(foods, food_embeddings, recipe_indices,  top_k, restrictions = []):
     lower, higher = parse_args(restrictions)
     
     food_embeddings_array = list(food_embeddings.values())
     node_id_to_sequential = {seq_id: node_id for seq_id, node_id in enumerate(list(food_embeddings.keys()))}
     subset_embeddings = [food_embeddings[index] for index in recipe_indices]
-    
-    # sum_embeddings = np.sum(subset_embeddings)
-    # subset_embeddings = [embedding - sum_embeddings*p for embedding in subset_embeddings]
-    
     similarity_matrix = euclidean_distances(subset_embeddings, food_embeddings_array)
     most_similar_foods = np.argsort(similarity_matrix, axis=1)[:, :]
     
@@ -28,3 +21,15 @@ def retrieval_with_restrictions_simple_context(foods: pd.DataFrame, food_embeddi
 
     named_foods = [map_indices_to_colname([index for index in indices], foods, ) for indices in most_similar_filtered]
     return named_foods
+    
+def parse_args(restrictions):
+    lower = []
+    higher = []
+    for restriction in restrictions:
+        if restriction[1] == 'lower':
+            lower.append(restriction[0])
+        if restriction[1] == 'higher':
+            higher.append(restriction[0])
+    return lower, higher
+            
+        

@@ -4,8 +4,9 @@ from typing import Dict, Tuple
 from dietdupe.retrieval import parse_args
 from sklearn.metrics.pairwise import euclidean_distances
 from dietdupe.utils import map_indices_to_colname, map_indices_and_filter_by_colname # TODO: move to retriever utils
+from dietdupe.retrieval.retriever_functions.default_params import RECIPE_CONTEXT_IMPORTANCE
 
-p = 0.1 # parameter - move to retriever class
+
 def retrieval_with_restrictions_simple_context(foods: pd.DataFrame, food_embeddings: Dict[int, np.ndarray], recipe_indices: list[int],  top_k: int, restrictions: list[Tuple[str, str]] = [])-> list[list[str]]:
     lower, higher = parse_args(restrictions)
     
@@ -14,14 +15,14 @@ def retrieval_with_restrictions_simple_context(foods: pd.DataFrame, food_embeddi
     subset_embeddings = [food_embeddings[index] for index in recipe_indices]
     
     sum_embeddings = np.sum(subset_embeddings)
-    subset_embeddings = [embedding - sum_embeddings*p for embedding in subset_embeddings]
+    subset_embeddings = [embedding - sum_embeddings*RECIPE_CONTEXT_IMPORTANCE for embedding in subset_embeddings]
     
     similarity_matrix = euclidean_distances(subset_embeddings, food_embeddings_array)
     most_similar_foods = np.argsort(similarity_matrix, axis=1)[:, :]
     
     most_similar_filtered = []
     for dietdupes in most_similar_foods:
-        base_index= node_id_to_sequential[dietdupes[0]]
+        base_index= node_id_to_sequential[dietdupes[0]] # same food
         dietdupes_node_ids = [node_id_to_sequential[index] for index in dietdupes]
         filtered_indices = map_indices_and_filter_by_colname(base_index,  dietdupes_node_ids, foods, higher, lower)[:top_k]
         most_similar_filtered.append(filtered_indices)

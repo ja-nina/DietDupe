@@ -2,6 +2,7 @@ import os
 import pandas as pd
 import pickle
 
+from dietdupe.retrieval.retriever_functions.retrieval_recipe_simple_context import retrieval_with_restrictions_simple_context
 from dietdupe.retrieval.retriever_functions.retrieval_simple import retrieval_simple
 from dietdupe.retrieval.retriever_functions.retrieval_with_restrictions import retrieval_with_restrictions
 from dietdupe.utils import input_ingredients
@@ -47,7 +48,7 @@ class DietDupe:
         ingredients_matched = recipe_ingredients
         embeddings = self.get_embeddings()
         foods = self.load_foods()
-        return retrieval_with_restrictions(foods, embeddings, ingredients_matched, 5, restrictions=restrictions)
+        return retrieval_with_restrictions_simple_context(foods, embeddings, ingredients_matched, 5, restrictions=restrictions)
     
 if __name__ == '__main__':
     ingredients = input_ingredients() 

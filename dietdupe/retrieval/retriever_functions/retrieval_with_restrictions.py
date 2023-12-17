@@ -1,5 +1,6 @@
 from sklearn.metrics.pairwise import euclidean_distances # euclidian distances because we work on tsne projections
 from dietdupe.utils import map_indices_to_colname, map_indices_and_filter_by_colname
+from dietdupe.retrieval.utils import parse_args
 import numpy as np
 
 
@@ -22,14 +23,5 @@ def retrieval_with_restrictions(foods, food_embeddings, recipe_indices,  top_k, 
     named_foods = [map_indices_to_colname([index for index in indices], foods, ) for indices in most_similar_filtered]
     return named_foods
     
-def parse_args(restrictions):
-    lower = []
-    higher = []
-    for restriction in restrictions:
-        if restriction[1] == 'lower':
-            lower.append(restriction[0])
-        if restriction[1] == 'higher':
-            higher.append(restriction[0])
-    return lower, higher
-            
+
         

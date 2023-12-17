@@ -13,8 +13,8 @@ def retrieval_with_restrictions_simple_context(foods: pd.DataFrame, food_embeddi
     node_id_to_sequential = {seq_id: node_id for seq_id, node_id in enumerate(list(food_embeddings.keys()))}
     subset_embeddings = [food_embeddings[index] for index in recipe_indices]
     
-    # sum_embeddings = np.sum(subset_embeddings)
-    # subset_embeddings = [embedding - sum_embeddings*p for embedding in subset_embeddings]
+    sum_embeddings = np.sum(subset_embeddings)
+    subset_embeddings = [embedding - sum_embeddings*p for embedding in subset_embeddings]
     
     similarity_matrix = euclidean_distances(subset_embeddings, food_embeddings_array)
     most_similar_foods = np.argsort(similarity_matrix, axis=1)[:, :]
